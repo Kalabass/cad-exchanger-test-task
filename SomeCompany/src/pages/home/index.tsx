@@ -72,14 +72,14 @@ const HomePage: FC = () => {
         }}
       >
         <Stack spacing={3}>
-          <Typography fontWeight={600} fontSize={52}>
+          <Typography component={'h2'} fontWeight={600} fontSize={52}>
             Also very important title
           </Typography>
           <Grid container spacing={6}>
             {articles.map((article, index) => (
               <Grid size={4} key={index}>
                 <Box>
-                  <Typography fontWeight={400} fontSize={32}>
+                  <Typography component={'h5'} fontWeight={400} fontSize={32}>
                     {article.title}
                   </Typography>
                   <Typography>{article.description}</Typography>
