@@ -1,11 +1,14 @@
 import { FormData } from '../types/formData';
 
 export const sendData = async (formData: FormData): Promise<string> => {
-  const response = await fetch('http://localhost:3232/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
-  });
+  const response = await fetch(
+    'https://cadexchangertesttask.netlify.app/.netlify/functions/HandleFormData',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    }
+  );
 
   if (!response.ok) {
     throw new Error('Response was not ok');
