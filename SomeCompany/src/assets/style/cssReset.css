@@ -3,6 +3,7 @@
   margin: 0;
   border: none;
   font-family: 'Roboto', sans-serif;
+  max-width: 100%;
 }
 
 *,

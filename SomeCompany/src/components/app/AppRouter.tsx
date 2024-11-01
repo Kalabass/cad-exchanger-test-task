@@ -1,7 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from 'react-router-dom';
 
-import { Routes } from "../lib/routes";
-import * as AppPages from "./AppPages";
+import { Routes } from '../const/routes';
+import * as AppPages from './AppPages';
 
 export const AppRouter = createBrowserRouter([
   {

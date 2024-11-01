@@ -1,16 +1,15 @@
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { FC } from 'react';
 
 const Footer: FC = () => {
   return (
-    <AppBar
+    <Box
       position='sticky'
       color='primary'
-      elevation={0}
       sx={{
         backgroundColor: 'white',
         borderTop: '1px solid grey',
-        height: '128px',
+        height: '80px',
         top: 'auto',
         bottom: 0,
         textAlign: 'center',
@@ -20,12 +19,10 @@ const Footer: FC = () => {
       }}
       component={'footer'}
     >
-      <Toolbar>
-        <Typography color='black' fontWeight={600} fontSize={24}>
-          SomeCompany 2024
-        </Typography>
-      </Toolbar>
-    </AppBar>
+      <Typography color='black' fontWeight={600} fontSize={24}>
+        SomeCompany, 2024
+      </Typography>
+    </Box>
   );
 };
 

@@ -1,37 +1,20 @@
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { sendData } from '@/components/lib/apiCLients';
+import { FormData } from '@/components/types/formData';
+import { StyledComponentProps } from '@/components/types/styledComponentstypes';
+import { Box, Container, Typography, useTheme } from '@mui/material';
+import { styled } from '@mui/system';
 import { FC, useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import ContactForm from './ContactForm';
 
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
+const HEADER_FOOTER_HEIGHT = '160px';
 
 const ContactsPage: FC = () => {
+  const theme = useTheme();
+
   const [response, setResponse] = useState<string | undefined>();
 
-  const sendData = async (formData: FormData): Promise<string> => {
-    const response = await fetch('http://localhost:3232/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Response was not ok');
-    }
-
-    return response.text();
-  };
+  const { handleSubmit, control } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -42,103 +25,33 @@ const ContactsPage: FC = () => {
     }
   };
 
-  const { handleSubmit, control } = useForm<FormData>();
-
   return (
     <Container>
-      <Paper
-        sx={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {!response && (
-          <>
-            <Typography component='h1' fontWeight={600} fontSize={64}>
-              Only CTA on the page
-            </Typography>
-            <Box
-              component='form'
-              onSubmit={handleSubmit(onSubmit)}
-              sx={{ border: 1, borderColor: 'black', borderRadius: 1, p: 2 }}
-            >
-              <Stack spacing={2}>
-                <Box>
-                  <Typography>Name</Typography>
-                  <Controller
-                    name='name'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        placeholder='Value'
-                        fullWidth
-                        size='small'
-                        {...field}
-                        error={!!error}
-                        value={field.value ?? ''}
-                      />
-                    )}
-                  />
-                </Box>
-                <Box>
-                  <Typography>Email</Typography>
-                  <Controller
-                    name='email'
-                    control={control}
-                    rules={{
-                      required: true,
-                      pattern:
-                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    }}
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        placeholder='Value'
-                        fullWidth
-                        size='small'
-                        {...field}
-                        error={!!error}
-                        value={field.value ?? ''}
-                      />
-                    )}
-                  />
-                </Box>
-                <Box>
-                  <Typography>Message</Typography>
-                  <Controller
-                    name='message'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field, fieldState: { error } }) => (
-                      <TextField
-                        multiline
-                        placeholder='Value'
-                        fullWidth
-                        size='small'
-                        {...field}
-                        error={!!error}
-                        value={field.value ?? ''}
-                      />
-                    )}
-                  />
-                </Box>
-                <Button type='submit'>submit</Button>
-              </Stack>
-            </Box>
-          </>
-        )}
-
-        {response && (
-          <Typography component='h1' fontWeight={600} fontSize={54}>
+      <StyledMain component='main'>
+        {response ? (
+          <Typography variant='h1' color={theme.palette.custom.accentPurple}>
             {response}
           </Typography>
+        ) : (
+          <>
+            <Typography variant='h1' color={theme.palette.custom.accentPurple}>
+              Only CTA on the page
+            </Typography>
+
+            <ContactForm onSubmit={handleSubmit(onSubmit)} control={control} />
+          </>
         )}
-      </Paper>
+      </StyledMain>
     </Container>
   );
 };
 
 export default ContactsPage;
+
+const StyledMain = styled(Box)<StyledComponentProps>(() => ({
+  height: `calc(100vh - ${HEADER_FOOTER_HEIGHT})`,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
