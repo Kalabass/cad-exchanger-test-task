@@ -1,5 +1,9 @@
 import { FormData } from '../types/formData';
 
+interface ResponseData {
+  message: string;
+}
+
 export const sendData = async (formData: FormData): Promise<string> => {
   const response = await fetch(
     'https://cadexchangertesttask.netlify.app/.netlify/functions/HandleFormData',
@@ -14,5 +18,6 @@ export const sendData = async (formData: FormData): Promise<string> => {
     throw new Error('Response was not ok');
   }
 
-  return response.text();
+  const data: ResponseData = await response.json();
+  return data.message;
 };
