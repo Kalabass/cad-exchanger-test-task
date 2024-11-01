@@ -1,0 +1,20 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Taldom",
+			"country": {
+				"code": "RU",
+				"name": "Russia"
+			},
+			"subdivision": {
+				"code": "MOS",
+				"name": "Moscow Oblast"
+			},
+			"timezone": "Europe/Moscow",
+			"latitude": 56.7317,
+			"longitude": 37.5325,
+			"postalCode": "141900"
+		},
+		"timestamp": 1730494645768
+	}
+}
